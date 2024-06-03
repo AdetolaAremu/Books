@@ -1,0 +1,81 @@
+# Ignore Visual Studio temporary files, build results, and
+# build directories
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code directories
+.vscode/
+.vscode-test/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Configuration files
+appsettings.json
+appsettings.*.json
+
+# Secrets
+secrets.json
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# DotNet specific folders
+.history/
+.nuget/
+.vs/
+.idea/
+*.vspscc
+*.vssscc
+
+# macOS files
+.DS_Store
+
+# Linux files
+*~
+
+# Logs
+*.log
+logs/
+
+# Yarn
+.yarn/*
+!.yarn/cache
+!.yarn/unplugged
+!.yarn/build-state.yml
+!.yarn/install-state.gz
+.pnp.*
+
+# Environment variables
+.env
+
+# JetBrains Rider
+.idea/
