@@ -7,24 +7,34 @@ namespace bookreview.Services
   {
     private ApplicationDbContext _countryContext;
 
+    public CountryRepository(ApplicationDbContext countryContext)
+    {
+      _countryContext = countryContext;
+    }
+
     public ICollection<Author> GetAuthorsFromACountry(int countryId)
     {
-      throw new NotImplementedException();
+      return _countryContext.Authors.Where(a => a.Id == countryId).ToList();
+    }
+
+    public bool CountryExists(int countryId)
+    {
+      return _countryContext.Countries.Any(c => c.Id == countryId);
     }
 
     public ICollection<Country> GetCountries()
     {
-      throw new NotImplementedException();
+      return _countryContext.Countries.OrderBy(c => c.Name).ToList();
     }
 
     public Country GetCountry(int countryId)
     {
-      throw new NotImplementedException();
+      return _countryContext.Countries.Where(c => c.Id == countryId).FirstOrDefault();
     }
 
-    public Country GetCountryOfAnAuthor(int countryId)
+    public Country GetCountryOfAnAuthor(int authorId)
     {
-      throw new NotImplementedException();
+      return _countryContext.Authors.Where(a => a.Id == authorId).Select(c => c.Country).FirstOrDefault();
     }
   }
 }
