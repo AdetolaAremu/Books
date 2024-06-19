@@ -4709,19 +4709,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/user/.nuget/packages/": {}
+    "C:\\Users\\adetola\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/user/Documents/BookReview/BookReview.csproj",
+      "projectUniqueName": "C:\\Users\\adetola\\Documents\\Books\\BookReview.csproj",
       "projectName": "BookReview",
-      "projectPath": "/Users/user/Documents/BookReview/BookReview.csproj",
-      "packagesPath": "/Users/user/.nuget/packages/",
-      "outputPath": "/Users/user/Documents/BookReview/obj/",
+      "projectPath": "C:\\Users\\adetola\\Documents\\Books\\BookReview.csproj",
+      "packagesPath": "C:\\Users\\adetola\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\adetola\\Documents\\Books\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/user/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\adetola\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -4796,7 +4796,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
