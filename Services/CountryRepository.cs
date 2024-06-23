@@ -5,7 +5,7 @@ namespace bookreview.Services
 {
   public class CountryRepository : ICountryRepository
   {
-    private readonly ApplicationDbContext _countryContext;
+    private ApplicationDbContext _countryContext;
 
     public CountryRepository(ApplicationDbContext countryContext)
     {
