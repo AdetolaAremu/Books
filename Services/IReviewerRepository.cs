@@ -4,7 +4,7 @@ namespace bookreview.Services
 {
   public interface IReviewerRepository
   {
-    ICollection<Reviewer> Reviewers();
+    ICollection<Reviewer> GetReviewers();
     Reviewer GetReviewer(int reviewerId);
     ICollection<Review> GetReviewsByReviewer(int reviewerId);
     Reviewer GetReviewerOfAReview(int reviewId);
