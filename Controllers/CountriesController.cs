@@ -75,5 +75,31 @@ namespace bookreview.Controllers
 
       return Ok(countryDTO);
     }
+
+    [HttpGet("{countryId}/author")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public IActionResult GetAuthorsFromACountry(int countryId)
+    { 
+      if (!_countryRepository.CountryExists(countryId)) return NotFound();
+
+      var authors = _countryRepository.GetAuthorsFromACountry(countryId);
+
+      if(!ModelState.IsValid) return BadRequest();
+
+      var authorDTO = new List<AuthorDTO>();
+
+      foreach(var author in authors)
+      {
+        authorDTO.Add(new AuthorDTO{
+          Id = author.Id,
+          FirstName = author.FirstName,
+          LastName = author.LastName,
+        });
+      }
+
+      return Ok(authorDTO);
+    }
   }
 }

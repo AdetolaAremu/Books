@@ -90,5 +90,34 @@ namespace bookreview.Controllers
 
       return Ok(categories);
     }
+
+    [HttpGet("{categoryId}/books")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult GetBooksFromACategory(int categoryId)
+    {
+      var checkcategory = _categoryRepository.CategoryExists(categoryId);
+
+      if (!checkcategory) return NotFound();
+
+      var books = _categoryRepository.GetAllBooksPerCategory(categoryId);
+
+      if (!ModelState.IsValid) return BadRequest();
+
+      var bookDto = new List<BookDTO>();
+
+      foreach (var book in books)
+      {
+        bookDto.Add(new BookDTO{
+          Id = book.Id,
+          Isbn = book.Isbn,
+          Title = book.Title,
+          DatePublished = book.DatePublished
+        });
+      }
+
+      return Ok(bookDto);
+    }
   }
 }
