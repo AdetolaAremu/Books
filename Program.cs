@@ -19,6 +19,7 @@ builder.Services.AddControllers().AddNewtonsoftJson().AddXmlDataContractSerializ
 
 // Register repositories
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 
