@@ -9,10 +9,12 @@ namespace bookreview.Controllers
   public class CountryController : ControllerBase
   {
     private ICountryRepository _countryRepository;
+    private IAuthorRepository _authorRepository;
 
-    public CountryController(ICountryRepository country)
+    public CountryController(ICountryRepository country, IAuthorRepository authorRepository)
     {
       _countryRepository = country;
+      _authorRepository = authorRepository;
     }
 
     [HttpGet]
@@ -62,9 +64,9 @@ namespace bookreview.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult GetCountryOfAnAuthor(int authorId)
     {
-      var authorCountry = _countryRepository.GetCountryOfAnAuthor(authorId);
+      if (!_authorRepository.AuthorExists(authorId)) return NotFound();
 
-      if (authorCountry == null) return NotFound();
+      var authorCountry = _countryRepository.GetCountryOfAnAuthor(authorId);
 
       if(!ModelState.IsValid) return BadRequest();
 

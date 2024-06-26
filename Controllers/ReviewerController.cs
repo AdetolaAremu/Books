@@ -9,10 +9,12 @@ namespace bookreview.Controllers
   public class ReviewerController : ControllerBase
   {
     private IReviewerRepository _reviewerRepository;
+    private IReviewRepository _reviewRepository;
 
-    public ReviewerController(IReviewerRepository reviewerRepository)
+    public ReviewerController(IReviewerRepository reviewerRepository, IReviewRepository reviewRepository)
     {
       _reviewerRepository = reviewerRepository;
+      _reviewRepository = reviewRepository;
     }
 
     [HttpGet]
@@ -90,17 +92,17 @@ namespace bookreview.Controllers
       return Ok(reviews);
     }
 
-    [HttpGet("details/{reviewerId}")]
+    [HttpGet("details/{reviewId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult GetReviewerOfAReview(int reviewerId)
+    public IActionResult GetReviewerOfAReview(int reviewId)
     {
-      var checkIfReviewerExists = _reviewerRepository.ReviewerExists(reviewerId);
+      var checkIfReviewExists = _reviewRepository.ReviewExists(reviewId);
 
-       if (!checkIfReviewerExists) return NotFound();
+      if (!checkIfReviewExists) return NotFound();
 
-      var reviewer = _reviewerRepository.GetReviewerOfAReview(reviewerId);
+      var reviewer = _reviewerRepository.GetReviewerOfAReview(reviewId);
 
       if (!ModelState.IsValid) return BadRequest();
 

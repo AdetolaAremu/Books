@@ -8,6 +8,6 @@ namespace bookreview.Services
     Review GetReview(int reviewId);
     ICollection<Review> GetReviewsOfABook(int bookId);
     Book GetBookOfAReview(int reviewId);
-    bool ReviewExists(int categoryId);
+    bool ReviewExists(int reviewId);
   }
 }
