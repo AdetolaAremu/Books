@@ -36,5 +36,13 @@ namespace bookreview.Services
     {
       return _categoryContext.Categories.Any(c => c.Id == categoryId);
     }
+
+    public bool CategoryDuplicate(string name, int categoryId)
+    {
+      var category = _categoryContext.Categories.Where(c => c.Name.Trim().ToLower() == name.Trim().ToLower() 
+        && c.Id != categoryId).FirstOrDefault();
+
+      return category == null ? false : true;
+    }
   }
 }

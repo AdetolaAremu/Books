@@ -9,5 +9,6 @@ namespace bookreview.Services
     ICollection<Category> GetAllCategoriesOfABook(int bookId);
     ICollection<Book> GetAllBooksPerCategory(int categoryId);
     bool CategoryExists(int categoryId);
+    bool CategoryDuplicate(string name, int categoryId);
   }
 }

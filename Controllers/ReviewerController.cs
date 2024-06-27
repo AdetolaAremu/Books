@@ -98,6 +98,8 @@ namespace bookreview.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult GetReviewerOfAReview(int reviewId)
     {
+      if (!_reviewRepository.ReviewExists(reviewId)) return NotFound();
+
       var checkIfReviewExists = _reviewRepository.ReviewExists(reviewId);
 
       if (!checkIfReviewExists) return NotFound();

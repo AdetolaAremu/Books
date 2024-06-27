@@ -6,8 +6,8 @@ namespace bookreview.Services
   {
     ICollection<Book> GetAllBooks();
     Book GetBook(int bookId);
-    Book GetBookByIsbn(int bookId, string bookIsbn);
-    Book isDuplicateISBN(string bookIsbn);
+    Book GetBookByIsbn(string bookIsbn);
+    bool isDuplicateISBN(string bookIsbn, int bookId);
     decimal GetBookRating(int bookId);
     bool BookExists(int bookId);
     bool BookIsbnExists(string bookIsbn);

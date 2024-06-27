@@ -9,10 +9,12 @@ namespace bookreview.Controllers
   public class ReviewController : ControllerBase
   {
     private IReviewRepository _reviewRepository;
+    private IBookRepository _bookRepository;
 
-    public ReviewController(IReviewRepository reviewController)
+    public ReviewController(IReviewRepository reviewController, IBookRepository bookRepository)
     {
       _reviewRepository = reviewController;
+      _bookRepository = bookRepository;
     }
 
     [HttpGet]
@@ -67,6 +69,7 @@ namespace bookreview.Controllers
     public IActionResult GetReviewsOfABook(int bookId)
     {
       // Todo: check if book exists
+      if (!_bookRepository.BookExists(bookId)) return NotFound();
 
       var getBook = _reviewRepository.GetReviewsOfABook(bookId);
 
