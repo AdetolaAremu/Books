@@ -1,3 +1,4 @@
+using bookreview.DTO;
 using bookreview.Models;
 
 namespace bookreview.Services
@@ -10,5 +11,10 @@ namespace bookreview.Services
     ICollection<Book> GetAllBooksPerCategory(int categoryId);
     bool CategoryExists(int categoryId);
     bool CategoryDuplicate(string name, int categoryId);
+    bool CategoryNameExists(string name);
+    bool CreateCategory(Category category);
+    bool UpdateCategory(CategoryDTO categoryDTO);
+    bool DeleteCategory(Category category);
+    bool SaveCategory();
   }
 }

@@ -1,4 +1,5 @@
 using bookreview.DataStore;
+using bookreview.DTO;
 using bookreview.Models;
 
 namespace bookreview.Services
@@ -43,6 +44,39 @@ namespace bookreview.Services
         && c.Id != categoryId).FirstOrDefault();
 
       return category == null ? false : true;
+    }
+
+    public bool CategoryNameExists(string name)
+    {
+      var category = _categoryContext.Categories.Where(c => c.Name.Trim().ToLower() == name.Trim().ToLower()).FirstOrDefault();
+      return category == null ? false : true;
+    }
+
+    public bool CreateCategory(Category category)
+    {
+      _categoryContext.Add(category);
+      return SaveCategory();
+    }
+
+    public bool UpdateCategory(CategoryDTO categoryDTO)
+    {
+      var category = _categoryContext.Categories.Where(c => c.Id == categoryDTO.Id).FirstOrDefault();
+
+      category.Name = categoryDTO.Name;
+      
+      return SaveCategory();
+    }
+
+    public bool DeleteCategory(Category category)
+    {
+      _categoryContext.Remove(category);
+      return SaveCategory();
+    }
+
+    public bool SaveCategory()
+    {
+      var category = _categoryContext.SaveChanges();
+      return category >= 0 ? true : false;
     }
   }
 }

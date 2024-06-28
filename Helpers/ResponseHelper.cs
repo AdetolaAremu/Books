@@ -4,7 +4,7 @@ namespace bookreview.Helpers
 {
  public static class ResponseHelper
  {
-  public static IActionResult SuccessResponseHelper(string message, object data = null, int statusCode=201)
+  public static IActionResult SuccessResponseHelper(string message, object data = null, int statusCode=200)
   {
     var response = new {
       status = "success",
