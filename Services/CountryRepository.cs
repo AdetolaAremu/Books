@@ -1,4 +1,5 @@
 using bookreview.DataStore;
+using bookreview.DTO;
 using bookreview.Models;
 
 namespace bookreview.Services
@@ -51,16 +52,27 @@ namespace bookreview.Services
       return Save();
     }
 
-    public bool UpdateCountry(Country country)
+    public bool UpdateCountry(CountryDTO country)
     {
-      _countryContext.Update(country);
+      var getCountry = _countryContext.Countries.Where(c => c.Id == country.Id).FirstOrDefault();
+
+      getCountry.Name = country.Name;
+
       return Save();
     }
 
     public bool DeleteCountry(Country country)
     {
+      // var country = _countryContext.Countries.Where(c => c.Id == countryId).FirstOrDefault();
       _countryContext.Remove(country);
       return Save();
+    }
+
+    public bool CheckIfCountryNameExists(string name)
+    {
+      var country = _countryContext.Countries.Where(c => c.Name.Trim().ToLower() == name.Trim().ToLower()).FirstOrDefault();
+
+      return country == null ? false : true;
     }
 
     public bool Save()
