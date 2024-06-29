@@ -1,3 +1,4 @@
+using bookreview.DTO;
 using bookreview.Models;
 
 namespace bookreview.Services
@@ -11,5 +12,10 @@ namespace bookreview.Services
     decimal GetBookRating(int bookId);
     bool BookExists(int bookId);
     bool BookIsbnExists(string bookIsbn);
+
+    bool CreateBook(Book book, List<int> authorId, List<int> CategoryId);
+    bool UpdateBook(BookDTO bookDTO, List<int> authorId, List<int> CategoryId);
+    bool DeleteBook(Book book);
+    bool SaveBook();
   }
 }

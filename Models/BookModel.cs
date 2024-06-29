@@ -18,8 +18,13 @@ namespace bookreview.Models
     public string Title { get; set; }
     
     public virtual ICollection<Review> Reviews { get; set; }
+
+    public int BookAuthorId { get; set; }
     public virtual ICollection<BookAuthor> BookAuthors { get; set; }
+
+    public int BookCategorId { get; set; }
     public virtual ICollection<BookCategory> BookCategories { get; set; }
+
     public DateTime? DatePublished { get; set; }
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }

@@ -186,7 +186,7 @@ namespace bookreview.Controllers
 
       if (!deleteCategory) ResponseHelper.ErrorResponseHelper($"Something went wrong while deleting your record, please retry", new {ModelState});
 
-      return ResponseHelper.SuccessResponseHelper("Category deleted successfully", null, 200);
+      return ResponseHelper.SuccessResponseHelper<string>("Category deleted successfully", null, 200);
     }
   }
 }

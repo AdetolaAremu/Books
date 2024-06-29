@@ -1,3 +1,4 @@
+using bookreview.DTO;
 using bookreview.Models;
 
 namespace bookreview.Services
@@ -9,5 +10,10 @@ namespace bookreview.Services
     ICollection<Review> GetReviewsByReviewer(int reviewerId);
     Reviewer GetReviewerOfAReview(int reviewId);
     bool ReviewerExists(int reviewerId);
+
+    bool CreateReviewer(Reviewer reviewer);
+    bool UpdateReviewer(ReviewerDTO reviewerDTO);
+    bool DeleteReviewer(Reviewer reviewer);
+    bool SaveReviewer();
   }
 }

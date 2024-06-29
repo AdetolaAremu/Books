@@ -1,15 +1,18 @@
 using bookreview.DataStore;
+using bookreview.DTO;
 using bookreview.Models;
 
 namespace bookreview.Services
 {
   public class ReviewerRepository : IReviewerRepository
   {
-    private ApplicationDbContext _reviewerContext;
+    private ApplicationDbContext _reviewerContext, _reviewContext;
+    // private ApplicationDbContext _reviewContext;
 
-    public ReviewerRepository(ApplicationDbContext reviewerContext)
+    public ReviewerRepository(ApplicationDbContext reviewerContext, ApplicationDbContext reviewContext)
     {
       _reviewerContext = reviewerContext;
+      _reviewContext = reviewContext;
     }
 
     public ICollection<Reviewer> GetReviewers()
@@ -40,6 +43,40 @@ namespace bookreview.Services
     public bool ReviewerExists(int reviewerId)
     {
       return _reviewerContext.Reviewers.Any(r => r.Id == reviewerId);
+    }
+
+    public bool CreateReviewer(Reviewer reviewer)
+    {
+      _reviewerContext.Reviewers.Add(reviewer);
+      return SaveReviewer();
+    }
+
+    public bool UpdateReviewer(ReviewerDTO reviewer)
+    {
+      var getReviewer = _reviewerContext.Reviewers.Where(rr => rr.Id == reviewer.Id).First();
+
+      getReviewer.FirstName = reviewer.FirstName;
+      getReviewer.LastName = reviewer.LastName;
+
+      return SaveReviewer();
+    }
+
+    public bool DeleteReviewer(Reviewer reviewer)
+    {
+      // get the reviewer first
+      var reviews = _reviewContext.Reviews.Where(r => r.ReviewerId == reviewer.Id).ToList();
+      
+      if (reviews.Any()) _reviewContext.RemoveRange(reviews);
+
+      _reviewerContext.Remove(reviewer);
+
+      return SaveReviewer();
+    }
+
+    public bool SaveReviewer()
+    {
+      var reviewer = _reviewerContext.SaveChanges();
+      return reviewer >= 0 ? true : false;
     }
   }
 }

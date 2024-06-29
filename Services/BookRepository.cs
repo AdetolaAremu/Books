@@ -53,5 +53,11 @@ namespace bookreview.Services
     {
       return _applicationDBContext.Books.Where(b => b.Isbn == bookIsbn).FirstOrDefault();
     }
+
+    public bool SaveBook()
+    {
+      var book = _applicationDBContext.SaveChanges();
+      return book >= 0 ? true : false;
+    }
   }
 }

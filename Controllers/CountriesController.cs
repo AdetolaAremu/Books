@@ -188,7 +188,7 @@ namespace bookreview.Controllers
 
       if (!deleteCountry) ResponseHelper.ErrorResponseHelper($"Something went wrong while deleting your record, please retry", new {ModelState});
 
-      return ResponseHelper.SuccessResponseHelper("Country deleted successfully", null, 200);      
+      return ResponseHelper.SuccessResponseHelper<string>("Country deleted successfully", null, 200);      
     }
   }
 }

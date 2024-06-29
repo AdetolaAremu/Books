@@ -139,6 +139,7 @@ namespace bookreview.Controllers
 
     [HttpPut("{reviewId}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReviewDTO))]
     public IActionResult UpdateReview(int reviewId, [FromBody] ReviewDTO reviewDto)
@@ -149,14 +150,13 @@ namespace bookreview.Controllers
 
       if (!ModelState.IsValid) return BadRequest(ModelState);
 
-      if (reviewId != reviewDto.Id) return ResponseHelper.ErrorResponseHelper("Invalid request");
+      if (reviewId != reviewDto.Id) return ResponseHelper.ErrorResponseHelper("ID mismatch");
 
       var review = _reviewRepository.UpdateReview(reviewDto);
 
       if (!review) return ResponseHelper.ErrorResponseHelper($"Something went wrong while saving your record {reviewDto}", new {ModelState});
 
       return ResponseHelper.SuccessResponseHelper<object>("Review updated successfully", reviewDto);
-      // return Ok(reviewDto);
     }
 
     [HttpDelete("{reviewId}")]
@@ -166,9 +166,6 @@ namespace bookreview.Controllers
     public IActionResult DeleteReview(int reviewId)
     {
       if (!_reviewRepository.ReviewExists(reviewId)) return ResponseHelper.ErrorResponseHelper("Review does not exist", null, 404);
-
-      // if (_reviewRepository.GetBookOfAReview(reviewId) != null) 
-      //   return ResponseHelper.ErrorResponseHelper("The review belongs to a book", null, 400);
 
       var review = _reviewRepository.GetReview(reviewId);
 
