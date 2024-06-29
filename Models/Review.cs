@@ -20,8 +20,15 @@ namespace bookreview.Models
     [Required]
     [Range(1, 5, ErrorMessage = "Rating must  be between 1 and 5 stars")]
     public int Rating { get; set; }
+
+    [Required]
+    public int ReviewerId { get; set; }
     public virtual Reviewer Reviewers { get; set; }
+
+     [Required]
+    public int BookId { get; set; }
     public virtual Book Books { get; set; }
+
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
   } 

@@ -1,4 +1,6 @@
 using bookreview.DTO;
+using bookreview.Helpers;
+using bookreview.Models;
 using bookreview.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +40,7 @@ namespace bookreview.Controllers
         });
       }
 
-      return Ok(reviewDTO);
+      return ResponseHelper.SuccessResponseHelper("Reviews retrieved successfully", reviewDTO);
     }
 
     [HttpGet("{reviewId}")]
@@ -60,7 +62,7 @@ namespace bookreview.Controllers
         Rating = review.Rating
       };
 
-      return Ok(reviewDTO);
+      return ResponseHelper.SuccessResponseHelper("Reviews retrieved successfully", reviewDTO);
     }
 
     [HttpGet("{bookId}/book")]
@@ -87,7 +89,7 @@ namespace bookreview.Controllers
         });
       }
 
-      return Ok(reviewDTO);
+      return ResponseHelper.SuccessResponseHelper("Reviews retrieved successfully", reviewDTO);
     }
 
     [HttpGet("bookdetails/{reviewId}")]
@@ -109,7 +111,74 @@ namespace bookreview.Controllers
         DatePublished = book.DatePublished
       };
 
-      return Ok(bookDto);
+      return ResponseHelper.SuccessResponseHelper("Book retrieved successfully", bookDto);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ReviewDTO))]
+    public IActionResult CreateReview([FromBody] CreateReviewDTO reviewDTO)
+    {
+      if (reviewDTO == null) return ResponseHelper.ErrorResponseHelper("Invalid request body", new { ModelState }, 422);
+
+      if (!ModelState.IsValid) return BadRequest(ModelState);
+
+      var review = _reviewRepository.CreateReview(new Review{
+        Headline = reviewDTO.Headline,
+        Body = reviewDTO.Body,
+        Rating = reviewDTO.Rating,
+        ReviewerId = reviewDTO.ReviewerId,
+        BookId = reviewDTO.BookId,
+      });
+
+      if (!review) return ResponseHelper.ErrorResponseHelper($"Something went wrong while saving your record {reviewDTO}", new {ModelState});
+
+      return ResponseHelper.SuccessResponseHelper<object>("Review created successfully", reviewDTO, 201);
+    }
+
+    [HttpPut("{reviewId}")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReviewDTO))]
+    public IActionResult UpdateReview(int reviewId, [FromBody] ReviewDTO reviewDto)
+    {
+      if (reviewDto == null) return ResponseHelper.ErrorResponseHelper("Invalid request body", new { ModelState }, 422);
+
+      if(!_reviewRepository.ReviewExists(reviewId)) return ResponseHelper.ErrorResponseHelper("Review does not exist", null, 404);
+
+      if (!ModelState.IsValid) return BadRequest(ModelState);
+
+      if (reviewId != reviewDto.Id) return ResponseHelper.ErrorResponseHelper("Invalid request");
+
+      var review = _reviewRepository.UpdateReview(reviewDto);
+
+      if (!review) return ResponseHelper.ErrorResponseHelper($"Something went wrong while saving your record {reviewDto}", new {ModelState});
+
+      return ResponseHelper.SuccessResponseHelper<object>("Review updated successfully", reviewDto);
+      // return Ok(reviewDto);
+    }
+
+    [HttpDelete("{reviewId}")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult DeleteReview(int reviewId)
+    {
+      if (!_reviewRepository.ReviewExists(reviewId)) return ResponseHelper.ErrorResponseHelper("Review does not exist", null, 404);
+
+      // if (_reviewRepository.GetBookOfAReview(reviewId) != null) 
+      //   return ResponseHelper.ErrorResponseHelper("The review belongs to a book", null, 400);
+
+      var review = _reviewRepository.GetReview(reviewId);
+
+      if (!ModelState.IsValid) BadRequest(ModelState);
+
+      var deleteReview = _reviewRepository.DeleteReview(review);
+
+      if (!deleteReview) ResponseHelper.ErrorResponseHelper($"Something went wrong while deleting your record, please retry", new {ModelState});
+
+      return ResponseHelper.SuccessResponseHelper<string>("Review deleted successfully", null, 200);
     }
   }
 }

@@ -1,4 +1,5 @@
 using bookreview.DataStore;
+using bookreview.DTO;
 using bookreview.Models;
 
 namespace bookreview.Services
@@ -35,6 +36,35 @@ namespace bookreview.Services
     public bool ReviewExists(int reviewId)
     {
       return _reviewContext.Reviews.Any(r => r.Id == reviewId);
+    }
+
+    public bool CreateReview(Review review)
+    {
+      _reviewContext.Add(review);
+      return SaveReview();
+    }
+
+    public bool UpdateReview(ReviewDTO reviewDTO)
+    {
+      var review = _reviewContext.Reviews.Where(r => r.Id == reviewDTO.Id).First();
+      
+      review.Headline = reviewDTO.Headline;
+      review.Body = reviewDTO.Body;
+      review.Rating = reviewDTO.Rating;
+      
+      return SaveReview();
+    }
+
+    public bool DeleteReview(Review review)
+    {
+      _reviewContext.Remove(review);
+      return SaveReview();
+    }
+
+    public bool SaveReview()
+    {
+      var checkSaved = _reviewContext.SaveChanges();
+      return checkSaved >= 0 ? true : false;
     }
   }
 }
