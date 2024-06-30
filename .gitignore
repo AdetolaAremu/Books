@@ -39,6 +39,7 @@ ScaffoldingReadMe.txt
 
 # Configuration files
 appsettings.json
+appsettings.Developement.json
 appsettings.*.json
 
 # Secrets
