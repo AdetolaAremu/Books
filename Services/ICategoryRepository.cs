@@ -9,6 +9,7 @@ namespace bookreview.Services
     Category GetCategory(int categoryId);
     ICollection<Category> GetAllCategoriesOfABook(int bookId);
     ICollection<Book> GetAllBooksPerCategory(int categoryId);
+    int GetCountOfCategoriesPassed(List<int> categoriesId);
     bool CategoryExists(int categoryId);
     bool CategoryDuplicate(string name, int categoryId);
     bool CategoryNameExists(string name);

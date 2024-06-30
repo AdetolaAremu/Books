@@ -6,48 +6,48 @@ namespace bookreview.Services
 {
   public class AuthorRepository : IAuthorRepository
   {
-    private ApplicationDbContext _authorDBContext;
+    private ApplicationDbContext __applicationDBContext;
 
     public AuthorRepository(ApplicationDbContext applicationDbContext)
     {
-      _authorDBContext = applicationDbContext;
+      __applicationDBContext = applicationDbContext;
     }
 
     public ICollection<Author> GetAllAuthors()
     {
-      return _authorDBContext.Authors.ToList();
+      return __applicationDBContext.Authors.ToList();
     }
 
     public Author GetAuthor(int authorId)
     {
-      return _authorDBContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
+      return __applicationDBContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
     }
 
     public ICollection<Author> GetAuthorsOfABook(int bookId)
     {
-      return _authorDBContext.BookAuthors.Where(ba => ba.BookId == bookId).Select(a => a.Author).ToList();
+      return __applicationDBContext.BookAuthors.Where(ba => ba.BookId == bookId).Select(a => a.Author).ToList();
     }
 
     public ICollection<Book> GetBookByAuthor(int authorId)
     {
-      return _authorDBContext.BookAuthors.Where(a => a.AuthorId == authorId).Select(b => b.Book).ToList();
+      return __applicationDBContext.BookAuthors.Where(a => a.AuthorId == authorId).Select(b => b.Book).ToList();
     }
 
     public bool AuthorExists(int authorId)
     {
-      return _authorDBContext.Authors.Any(a => a.Id == authorId);
+      return __applicationDBContext.Authors.Any(a => a.Id == authorId);
     }
 
     public bool CreateAuthor(Author author)
     {
-      _authorDBContext.Authors.Add(author);
+      __applicationDBContext.Authors.Add(author);
 
       return SaveAuthor();
     }
 
     public bool UpdateAuthor(AuthorDTO authorDTO)
     {
-      var author = _authorDBContext.Authors.Where(a => a.Id == authorDTO.Id).First();
+      var author = __applicationDBContext.Authors.Where(a => a.Id == authorDTO.Id).First();
 
       author.FirstName = authorDTO.FirstName;
       author.LastName = authorDTO.LastName;
@@ -58,14 +58,19 @@ namespace bookreview.Services
 
     public bool DeleteAuthor(Author author)
     {
-      _authorDBContext.Remove(author);
+      __applicationDBContext.Remove(author);
       return SaveAuthor();
     }
 
     public bool SaveAuthor()
     {
-      var authorSave = _authorDBContext.SaveChanges();
+      var authorSave = __applicationDBContext.SaveChanges();
       return authorSave >= 0 ? true : false;
+    }
+
+    public int GetCountOfAuthorsPassed(List<int> authorsId)
+    {
+      return __applicationDBContext.Authors.Where(a => authorsId.Contains(a.Id)).Count();
     }
   }
 }

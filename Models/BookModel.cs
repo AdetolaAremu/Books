@@ -19,10 +19,8 @@ namespace bookreview.Models
     
     public virtual ICollection<Review> Reviews { get; set; }
 
-    public int BookAuthorId { get; set; }
     public virtual ICollection<BookAuthor> BookAuthors { get; set; }
 
-    public int BookCategorId { get; set; }
     public virtual ICollection<BookCategory> BookCategories { get; set; }
 
     public DateTime? DatePublished { get; set; }

@@ -9,8 +9,8 @@ namespace bookreview.Services
     Author GetAuthor(int authorId);
     ICollection<Author> GetAuthorsOfABook(int bookId);
     ICollection<Book> GetBookByAuthor(int authorId);
+    int GetCountOfAuthorsPassed(List<int> authorsId);
     bool AuthorExists(int authorId);
-
     bool CreateAuthor(Author reviewer);
     bool UpdateAuthor(AuthorDTO authorDTO);
     bool DeleteAuthor(Author reviewer);

@@ -6,8 +6,6 @@ namespace bookreview.Models
   {
     [Required]
     public int BookId { get; set; }
-
-    [Required]
     public Book Book { get; set; }
     
     public int AuthorId { get; set; }
